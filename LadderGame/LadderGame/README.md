@@ -76,9 +76,9 @@ n개의 사람과 m개의 사다리 개수를 입력할 수 있어야 한다.
 	- 이제까지 단계별 브랜치 내용을 code-squad 서버의 [내아이디] 브랜치로 PR을 보내서 합침.
 	- **git fetch upstream** : code-squad 서버의 [내아이디] 브랜치의 내용을 로컬로 가져옴.
 		- git fetch는 서버에는 있지만 로컬에는 없는 커밋들을 다운로드 받고, 트래킹브랜치(원격브랜치)가 가리키는 곳을 업데이트함(예: origin/master, upstream/undervineg). 하지만, 로컬의 상태는 변경 안 함(예: master) 
-		![Fetch 동작](fetch.png)
+		- ![Fetch 동작](fetch.png)
 		- 반면, git pull은 fetch + merge를 한 번에 수행. 
-		![Pull 동작](pull.png)
+		- ![Pull 동작](pull.png)
 	- **git rebase upstream/[내아이디]** : upstream을 fetch 후 upstream/[내아이디]브랜치는 원격과 동일한 최신 커밋을 가리키고 있지만, 로컬의 [내아이디] 브랜치는 기존 커밋을 가리키고 있음. 로컬의 [내아이디] 브랜치도 최신 커밋을 가리키도록 rebase.
 	- **git push** : code-squad 서버에서 최신 커밋을 받아 업데이트한 로컬 [내아이디]브랜치를 내 서버(origin)로 다시 업로드.
 
