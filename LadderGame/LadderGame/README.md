@@ -41,11 +41,12 @@ n개의 사람과 m개의 사다리 개수를 입력할 수 있어야 한다.
     - git remote show [서버명]
     
 <br/>
+
 ### 협업과정 (Pull Request)
 
 ![리뷰 과정](review-process.png)
 
-#### 단계별 브랜치를 생성 후 코딩. 완성 시 code-squad 서버로 PR. 승인되면 내 저장소의 [내아이디] 브랜치로 fetch 해온 후, 내 서버로 다시 push.
+#### (단계별 브랜치를 생성 후 코딩 ➤ 완성 시 code-squad 서버로 PR ➤ 승인되면 내 저장소의 [내아이디] 브랜치로 fetch ➤ 내 서버로 다시 push.)
 <br/>
 
 1. 타겟 프로젝트의 저장소(repository)를 내 저장소로 **fork** 한 후, 내 컴퓨터로 **clone**.
