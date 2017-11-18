@@ -1,97 +1,37 @@
-# 진행 방법
+## 사다리 게임 요구사항
 
-- 사다리 게임에 요구사항을 파악한다.
-- 요구사항에 대한 구현을 완료한 후 자신의 github 아이디에 해당하는 브랜치에 Pull Request(이하 PR)를 통해 코드 리뷰 요청을 한다.
-- 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-- 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
+간단한 사다리 게임을 구현한다.
+n개의 사람과 m개의 사다리 개수를 입력할 수 있어야 한다.
+사다리는 랜덤으로 있거나 없을 수도 있다.
+사다리가 있으면 -를 표시하고 없으면 " " 빈공백을 표시한다. 양옆에는 |로 세로를 표시한다.
+사다리 상태를 화면에 출력한다. 어느 시점에 출력할 것인지에 대한 제약은 없다.
 
-# 코드 리뷰 과정
-> 저장소 브랜치에 자신의 github 아이디에 해당하는 브랜치가 존재해야 한다.
->
-> 자신의 github 아이디에 해당하는 브랜치가 있는지 확인한다.
+### 메소드 분리
+>- indent depth를 2단계에서 1단계로 줄여라.
+>- else를 사용하지 마라.
+>- 메소드의 크기가 최대 10라인을 넘지 않도록 구현한다.
+>- method가 한 가지 일만 하도록 최대한 작게 만들어라.
 
-1. 자신의 github 아이디에 해당하는 브랜치가 없는 경우 브랜치 생성 요청 채널을 통해 브랜치 생성을 요청한다.
-프로젝트를 자신의 계정으로 fork한다. 저장소 우측 상단의 fork 버튼을 활용한다.
+### 객체 역할 분담
+>- 사다리 게임에 참여하는 사람에 이름을 최대5글자까지 부여할 수 있다. 사다리를 출력할 때 사람 이름도 같이 출력한다.
+>- 사람 이름은 쉼표(,)를 기준으로 구분한다.
+>- 사람 이름을 5자 기준으로 출력하기 때문에 사다리 폭도 넓어져야 한다.
+>- 이름 속성을 갖는 참여자 LadderPlayer struct를 작성한다.
+>- 모든 구조체는 각자 다른 스위프트 파일로 작성한다.
+>- 사다리 높이 속성과 참여자를 Array로 포함하는 LadderGame struct를 작성한다.
+>- 사용자의 입력을 받는 구조체(InputView)와 결과를 출력하는 구조체(ResultView)를 분리해서 구현한다.
+>- main 에서는 앞에서 분리한 타입들을 조합해 기능 구현을 완성한다.
 
-2. fork한 프로젝트를 자신의 컴퓨터로 clone한다.
-```
-git clone https://github.com/{본인_아이디}/{저장소 아이디}
-ex) https://github.com/godrm/swift-laddergame
-```
+**문제점**: 
 
-3. clone한 프로젝트 이동
-```
-cd {저장소 아이디}
-ex) cd swift-laddergame
-```
+- 결과가 중복이 되진 않는지 확인한다.
+- 사다리(-)가 같은 줄(row)에서 붙어있으면 안된다. 왼쪽이든 오른쪽이든 선택해야 하므로.
 
-4. 본인 아이디로 브랜치를 만들기 위한 checkout
-```
-git checkout -t origin/본인_아이디
-ex) git checkout -t origin/godrm
-```
+**해결방법**:
 
-5. 기능 구현을 위한 브랜치 생성 (연속번호를 붙여나간다)
-```
-git checkout -b 브랜치이름
-ex) git checkout -b ladder-step1
-```
+- 사용가능한 최대 사다리 개수 제한 : 한 줄(row) 내에서 사다리 최대 개수는 전체 열(col) 개수의 절반(반올림 적용). 사다리는 연속으로 들어갈 수 없기 때문. 사다리 사용한만큼 -1씩 감소.
+- 사다리 위치 랜덤 뽑기 시 좌우에 사다리가 있는 경우, 사다리를 찍지 않음.
 
-6. commit
-```
-git status //확인
-git rm 파일명 //삭제된 파일
-git add 파일명(or * 모두) // 추가/변경 파일
-git commit -m "메세지" // 커밋
-```
-
-7. 본인 원격 저장소에 올리기
-```
-git push --set-upstream origin 브랜치이름
-ex) git push --set-upstream origin ladder-step1
-```
-
-8. pull request
-	- pull request는 github 서비스에서 진행할 수 있다.
-	- pull request는 original 저장소의 브랜치(자신의 github 아이디)와 앞 단계에서 생성한 브랜치 이름을 기준으로 한다.
-
-	```
-	ex) code-squad/swift-laddergame godrm 브랜치 기준 => godrm/swift-laddergame ladder-step1
-	```
-	
-9. code review 및 push
-	- pull request를 통해 피드백을 받는다.
-	- 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-
-10. 기본(upstream) 브랜치 전환 및 base 저장소 추가하기(최초 시작하기 단계 한번만 하면 됨)
-
-	```
-	git checkout 본인_아이디
-	git remote add upstream base_저장소_url
-
-	ex) git checkout godrm
-	ex) git remote add upstream https://github.com/code-squad/swift-laddergame.git
-	```
-
-	- 위와 같이 base 저장소 추가한 후 remote 브랜치 목록을 본다.
-
-	```
-	git remote -v
-	```
-
-11. 기본 base 저장소와 sync하기 (PR 보낸 내용을 자신의 기본 저장소와 합치기)
-
-	```
-	git fetch upstream
-	git rebase upstream/본인_아이디
-	ex) git rebase upstream/godrm
-	```
-
-12. 다음 미션을 해결할 경우 [5단계 브랜치 생성]부터 다시 진행
-
-## 동영상을 통한 코드 리뷰() 를 통해 참고 가능
-
-- [fork하여 코드 리뷰하기](https://www.youtube.com/watch?v=ZSZoaG0PqLg) 
-- [PR 보내고 다시 PR보낼 때 유의 사항](https://www.youtube.com/watch?v=CbLNbCUsh5c&feature=youtu.be)
-
-## 실습 중 모든 질문은 슬랙 채널에서...
+### 단위 테스트
+>- 콘솔에 입/출력하는 코드는 단위 테스트하기 어렵기 때문에, 이번 단계에서는 입출력하는 코드는 단위 테스트 대상에서 제외한다.
+>- 콘솔 입/출력를 제외한 나머지 모든 소스 코드에 있는 모든 메서드에 대한 단위 테스트 로직을 구현한다.
